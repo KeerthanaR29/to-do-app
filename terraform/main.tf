@@ -7,7 +7,7 @@ data "aws_subnet_ids" "default_subnets" {
 }
 
 resource "aws_eks_cluster" "tss-cluster" {
-  name     = "tss-cluster"
+  name     = "tss-cluster-1"
   role_arn = aws_iam_role.tss-eks-cluster.arn
 
   vpc_config {
@@ -21,7 +21,7 @@ resource "aws_eks_cluster" "tss-cluster" {
 
 resource "aws_eks_node_group" "tss-cluster-node-groups" {
   cluster_name    = aws_eks_cluster.tss-cluster.name
-  node_group_name = "tss-cluster-node-group"
+  node_group_name = "tss-cluster-1-node-group"
   node_role_arn   = aws_iam_role.tss-cluster-worker-node-role.arn
   subnet_ids      = data.aws_subnet_ids.default_subnets.ids
 
@@ -49,7 +49,7 @@ resource "aws_eks_node_group" "tss-cluster-node-groups" {
 
 
 resource "aws_iam_role" "tss-cluster-worker-node-role" {
-  name               = "tss-cluster-worker-node-role"
+  name               = "tss-cluster-1-worker-node-role"
   assume_role_policy = data.aws_iam_policy_document.node_group_assume_role.json
 }
 
@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "node_group_assume_role" {
 }
 
 resource "aws_launch_template" "tss-launch-template" {
-  name = "tss-cluster-launch-template"
+  name = "tss-cluster-1-launch-template"
   instance_type = "t3.micro"
 
   tag_specifications {
@@ -97,7 +97,7 @@ resource "aws_iam_role_policy_attachment" "tss-cluster-AmazonEC2ContainerRegistr
 
 # Define the IAM role for your EKS cluster
 resource "aws_iam_role" "tss-eks-cluster" {
-  name = "tss-eks-cluster"
+  name = "tss-eks-cluster-1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
