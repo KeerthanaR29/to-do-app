@@ -22,7 +22,7 @@ pipeline {
              steps {
                  dir('terraform') {
                    withAWS(region: 'ap-southeast-1', credentials: 'aws') {
-                    sh "terraform init"
+                    sh "terraform init -reconfigure"
                     sh "terraform plan"
                     sh "terraform apply --auto-approve"
                      }
