@@ -32,7 +32,7 @@ pipeline {
         stage ("Deploy pods on cluster") {
             steps {
                  withAWS(region: 'ap-southeast-1', credentials: 'aws') {
-                      sh "aws eks update-kubeconfig --region ap-southeast-1 --name tss-cluster"
+                      sh "aws eks update-kubeconfig --region ap-southeast-1 --name tss-cluster-1"
                       sh "kubectl apply -f deployment.yaml"
                  }
             }
